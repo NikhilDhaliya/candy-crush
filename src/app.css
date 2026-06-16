@@ -6,19 +6,34 @@
 	padding: 0;
 	user-select: none;
 	-webkit-user-select: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background: #304763;
+	overscroll-behavior: none;
 }
 
 body {
 	font-family: 'Fredoka', sans-serif;
-	background: radial-gradient(circle, #ffcde4 0%, #b2dbfc 100%);
+	background:
+		radial-gradient(circle at 18% 18%, rgba(255, 229, 138, 0.28), transparent 28%),
+		radial-gradient(circle at 82% 12%, rgba(79, 195, 247, 0.28), transparent 30%),
+		linear-gradient(135deg, #304763 0%, #6a4d7e 48%, #c6537c 100%);
 	background-attachment: fixed;
 	color: #4a2105;
 	overflow: hidden;
 	height: 100vh;
+	height: 100dvh;
 	width: 100vw;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	overscroll-behavior: none;
+	touch-action: manipulation;
 }
 
 /* Glassmorphism Panel styles */

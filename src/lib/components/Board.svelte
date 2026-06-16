@@ -280,16 +280,16 @@
 
 <style>
 	.board-outer-container {
-		width: 100%;
-		max-width: 480px;
+		width: var(--board-size, min(100%, 480px));
+		max-width: calc(100vw - 12px);
 		aspect-ratio: 1;
-		padding: 10px;
-		background: linear-gradient(135deg, #a1704e 0%, #5d3f2c 100%);
-		border: 8px solid #fce8a6;
-		border-radius: 28px;
+		padding: clamp(6px, 1.8vw, 10px);
+		background: linear-gradient(135deg, #b67b43 0%, #74401f 48%, #4d2b17 100%);
+		border: clamp(5px, 1.6vw, 8px) solid #ffe58a;
+		border-radius: clamp(18px, 5vw, 28px);
 		box-shadow: 
-			0 12px 0 #3b2518,
-			0 16px 30px rgba(0, 0, 0, 0.4),
+			0 clamp(7px, 1.8vw, 12px) 0 #3b2518,
+			0 16px 30px rgba(63, 31, 20, 0.38),
 			inset 0 4px 0 rgba(255, 255, 255, 0.3);
 		touch-action: none;
 		position: relative;
@@ -364,11 +364,15 @@
 	}
 
 	.tile-light {
-		background-color: #ffdceb;
+		background:
+			radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.3), transparent 46%),
+			#ffd3e6;
 	}
 
 	.tile-dark {
-		background-color: #fca8ce;
+		background:
+			radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.2), transparent 48%),
+			#ff9dc4;
 	}
 
 	.booster-cursor {
@@ -651,5 +655,38 @@
 	@keyframes text-float {
 		from { transform: translateY(0); }
 		to { transform: translateY(-8px); }
+	}
+
+	/* Height-based responsive rules to shrink the board on short mobile viewports */
+	@media (max-height: 760px) {
+		.board-outer-container {
+			box-shadow: 
+				0 8px 0 #3b2518,
+				0 10px 20px rgba(0, 0, 0, 0.3),
+				inset 0 3px 0 rgba(255, 255, 255, 0.3);
+		}
+		.board-outer-container::before {
+			inset: -6px;
+			border-radius: 22px;
+		}
+		.combo-text {
+			font-size: 2.2rem;
+		}
+	}
+
+	@media (max-height: 640px) {
+		.board-outer-container {
+			box-shadow: 
+				0 6px 0 #3b2518,
+				0 8px 12px rgba(0, 0, 0, 0.3),
+				inset 0 2px 0 rgba(255, 255, 255, 0.3);
+		}
+		.board-outer-container::before {
+			inset: -4px;
+			border-radius: 18px;
+		}
+		.combo-text {
+			font-size: 1.8rem;
+		}
 	}
 </style>

@@ -76,10 +76,10 @@
 						{#each $gameStore.goal.collectColors as collect}
 							<div class="goal-item-collect">
 								<div class="goal-icon">
-									<Candy color={collect.color} type="standard" size={28} />
+									<Candy color={collect.color} type="standard" size={26} />
 								</div>
 								<span class="goal-qty" class:qty-done={collect.current >= collect.target}>
-									{collect.current} / {collect.target}
+									{collect.current}/{collect.target}
 								</span>
 							</div>
 						{/each}
@@ -90,7 +90,7 @@
 						<div class="goal-item-combo">
 							<span class="target-desc">Cascade:</span>
 							<span class="goal-qty" class:qty-done={$gameStore.goal.currentCombos! >= $gameStore.goal.targetCombos!}>
-								Combo x{$gameStore.goal.currentCombos || 1} / x{level.goal.targetCombos}
+								Combo x{$gameStore.goal.currentCombos || 1}/x{level.goal.targetCombos}
 							</span>
 						</div>
 					{/if}
@@ -131,69 +131,17 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- In-game Booster panel -->
-	<div class="booster-panel">
-		<span class="booster-panel-title">BOOSTERS</span>
-		<div class="booster-buttons">
-			<!-- Hammer -->
-			<button
-				class="booster-btn"
-				class:active={$gameStore.selectedBooster === 'hammer'}
-				disabled={$gameStore.boostersCount.hammer <= 0 || $gameStore.locked}
-				onclick={() => gameStore.selectBooster('hammer')}
-			>
-				<span class="booster-icon">🔨</span>
-				<div class="booster-label-container">
-					<span class="booster-name">Hammer</span>
-					<span class="booster-count">x{$gameStore.boostersCount.hammer}</span>
-				</div>
-			</button>
-
-			<!-- Shuffle -->
-			<button
-				class="booster-btn"
-				class:active={$gameStore.selectedBooster === 'shuffle'}
-				disabled={$gameStore.boostersCount.shuffle <= 0 || $gameStore.locked}
-				onclick={() => gameStore.selectBooster('shuffle')}
-			>
-				<span class="booster-icon">🔀</span>
-				<div class="booster-label-container">
-					<span class="booster-name">Shuffle</span>
-					<span class="booster-count">x{$gameStore.boostersCount.shuffle}</span>
-				</div>
-			</button>
-
-			<!-- Row Blast -->
-			<button
-				class="booster-btn"
-				class:active={$gameStore.selectedBooster === 'row_blast'}
-				disabled={$gameStore.boostersCount.row_blast <= 0 || $gameStore.locked}
-				onclick={() => gameStore.selectBooster('row_blast')}
-			>
-				<span class="booster-icon">🚀</span>
-				<div class="booster-label-container">
-					<span class="booster-name">Row Blast</span>
-					<span class="booster-count">x{$gameStore.boostersCount.row_blast}</span>
-				</div>
-			</button>
-		</div>
-		{#if $gameStore.selectedBooster}
-			<p class="booster-instruction">
-				Select a tile on the board to apply <strong>{$gameStore.selectedBooster}</strong>!
-			</p>
-		{/if}
-	</div>
 </div>
 
 <style>
 	.hud-container {
 		width: 100%;
-		max-width: 480px;
+		max-width: var(--board-size, 480px);
 		display: flex;
 		flex-direction: column;
-		gap: 12px;
-		margin: 0 auto 12px auto;
+		gap: clamp(5px, 1dvh, 10px);
+		margin: 0 auto;
+		flex-shrink: 0;
 	}
 
 	.hud-header {
@@ -204,12 +152,12 @@
 	}
 
 	.hud-back-btn {
-		width: 40px;
-		height: 40px;
+		width: clamp(34px, 8.8vw, 42px);
+		height: clamp(34px, 8.8vw, 42px);
 		border-radius: 50%;
-		background: #d93d8b;
+		background: linear-gradient(180deg, #ff6aa7 0%, #d82c76 100%);
 		border: 3px solid #fff;
-		box-shadow: 0 4px 0 #b71c1c;
+		box-shadow: 0 4px 0 #97234d, 0 6px 12px rgba(80, 23, 0, 0.2);
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -222,28 +170,33 @@
 
 	.level-info {
 		flex-grow: 1;
+		min-width: 0;
 	}
 
 	.level-title {
-		font-size: 1.8rem;
+		font-size: clamp(1.22rem, 5.8vw, 1.8rem);
 		font-weight: 700;
+		line-height: 0.92;
 	}
 
 	.level-subtitle {
-		font-size: 0.9rem;
-		color: #5d3f2c;
+		font-size: clamp(0.72rem, 2.8vw, 0.9rem);
+		color: #613315;
 		font-weight: 600;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	.score-display {
-		min-width: 120px;
+		min-width: clamp(92px, 27vw, 122px);
 	}
 
 	.score-bubble {
-		background: #ffffff;
-		border: 3px solid #f772b1;
-		border-radius: 16px;
-		padding: 4px 12px;
+		background: linear-gradient(180deg, #fff 0%, #fff5fb 100%);
+		border: 3px solid #ff70ad;
+		border-radius: 14px;
+		padding: 3px 10px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -251,13 +204,13 @@
 	}
 
 	.score-label {
-		font-size: 0.75rem;
+		font-size: clamp(0.58rem, 2.3vw, 0.72rem);
 		font-weight: 700;
-		color: #f772b1;
+		color: #d82c76;
 	}
 
 	.score-value {
-		font-size: 1.4rem;
+		font-size: clamp(1rem, 4.5vw, 1.35rem);
 		font-weight: 700;
 		color: #fff;
 		-webkit-text-stroke: 1px #5d3f2c;
@@ -265,19 +218,20 @@
 
 	.hud-stats-row {
 		display: flex;
-		gap: 12px;
+		gap: clamp(6px, 2vw, 10px);
 	}
 
 	.shadow-box {
 		flex: 1;
-		background: rgba(255, 255, 255, 0.9);
-		border: 4px solid #f772b1;
-		border-radius: 18px;
-		padding: 10px;
+		min-width: 0;
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 245, 251, 0.92));
+		border: 3px solid #ff70ad;
+		border-radius: 14px;
+		padding: clamp(5px, 1.4dvh, 8px);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		box-shadow: 0 6px 0 #d93d8b, 0 8px 10px rgba(0,0,0,0.1);
+		box-shadow: 0 4px 0 #d82c76, 0 7px 12px rgba(80, 23, 0, 0.12);
 	}
 
 	.limit-box {
@@ -285,15 +239,16 @@
 	}
 
 	.limit-label {
-		font-size: 0.8rem;
+		font-size: clamp(0.58rem, 2.2vw, 0.75rem);
 		font-weight: 700;
 		color: #5d3f2c;
 	}
 
 	.limit-value {
-		font-size: 2.2rem;
+		font-size: clamp(1.35rem, 7vw, 2rem);
 		font-weight: 700;
-		color: #d93d8b;
+		color: #d82c76;
+		line-height: 0.95;
 	}
 
 	.low-time {
@@ -307,16 +262,16 @@
 	}
 
 	.section-label {
-		font-size: 0.8rem;
+		font-size: clamp(0.58rem, 2.2vw, 0.75rem);
 		font-weight: 700;
 		color: #5d3f2c;
-		margin-bottom: 6px;
+		margin-bottom: 4px;
 	}
 
 	.goals-list {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 8px;
+		gap: 5px;
 		justify-content: center;
 		align-items: center;
 		width: 100%;
@@ -330,13 +285,13 @@
 	}
 
 	.target-desc {
-		font-size: 0.9rem;
+		font-size: clamp(0.68rem, 2.5vw, 0.82rem);
 		font-weight: 600;
 		color: #5d3f2c;
 	}
 
 	.target-score {
-		font-size: 1.4rem;
+		font-size: clamp(1rem, 4.2vw, 1.28rem);
 		font-weight: 700;
 		color: #fff;
 		-webkit-text-stroke: 1px #5d3f2c;
@@ -347,8 +302,8 @@
 		align-items: center;
 		gap: 4px;
 		background: #fff;
-		border: 2px solid #ffdceb;
-		padding: 2px 6px;
+		border: 2px solid #ffc2dc;
+		padding: 1px 5px;
 		border-radius: 10px;
 	}
 
@@ -358,7 +313,7 @@
 	}
 
 	.goal-qty {
-		font-size: 0.95rem;
+		font-size: clamp(0.72rem, 2.8vw, 0.9rem);
 		font-weight: 700;
 		color: #5d3f2c;
 	}
@@ -377,14 +332,14 @@
 	/* Progress Bar */
 	.progress-bar-container {
 		width: 100%;
-		padding: 8px 12px;
-		background: rgba(255, 255, 255, 0.7);
-		border-radius: 14px;
+		padding: 5px 10px;
+		background: rgba(255, 255, 255, 0.58);
+		border-radius: 12px;
 		border: 2px solid rgba(255, 255, 255, 0.9);
 	}
 
 	.progress-bar-track {
-		height: 20px;
+		height: clamp(12px, 2.7dvh, 18px);
 		width: 100%;
 		background: #e0e0e0;
 		border-radius: 10px;
@@ -408,9 +363,9 @@
 
 	.star-node {
 		position: absolute;
-		top: -4px;
-		width: 28px;
-		height: 28px;
+		top: -5px;
+		width: clamp(20px, 5.6vw, 27px);
+		height: clamp(20px, 5.6vw, 27px);
 		background: #fff;
 		border: 3px solid #bdbdbd;
 		border-radius: 50%;
@@ -438,90 +393,36 @@
 		100% { transform: scale(1.15) translateX(-43%); }
 	}
 
-	/* In-game Booster Panel */
-	.booster-panel {
-		background: rgba(255, 255, 255, 0.8);
-		border: 3px solid #ffd54f;
-		border-radius: 18px;
-		padding: 8px 12px;
-		margin-top: 4px;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 6px;
+	/* Responsive scaling rules for mobile screens */
+	@media (max-height: 760px) {
+		.hud-container {
+			gap: 5px;
+		}
+		.shadow-box {
+			border-width: 2px;
+			box-shadow: 0 4px 0 #d93d8b, 0 6px 8px rgba(0,0,0,0.1);
+		}
+		.progress-bar-container {
+			padding: 3px 8px;
+		}
 	}
 
-	.booster-panel-title {
-		font-size: 0.8rem;
-		font-weight: 700;
-		color: #5d3f2c;
-		letter-spacing: 0.5px;
+	@media (max-height: 640px) {
+		.hud-container {
+			gap: 3px;
+		}
+		.shadow-box {
+			padding-block: 3px;
+		}
 	}
 
-	.booster-buttons {
-		display: flex;
-		gap: 12px;
-		justify-content: center;
-		width: 100%;
-	}
+	@media (max-width: 420px) {
+		.level-subtitle {
+			max-width: 35vw;
+		}
 
-	.booster-btn {
-		flex: 1;
-		max-width: 110px;
-		padding: 6px;
-		background: linear-gradient(to bottom, #fff 0%, #f5f5f5 100%);
-		border: 3px solid #ccc;
-		border-radius: 12px;
-		cursor: pointer;
-		display: flex;
-		align-items: center;
-		gap: 6px;
-		transition: all 0.1s ease;
-		box-shadow: 0 3px 0 #bbb;
-	}
-
-	.booster-btn:active:not(:disabled) {
-		transform: translateY(2px);
-		box-shadow: 0 1px 0 #bbb;
-	}
-
-	.booster-btn:disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
-	}
-
-	.booster-btn.active {
-		border-color: #ffd54f;
-		background: linear-gradient(to bottom, #fffde7 0%, #fff59d 100%);
-		box-shadow: 0 3px 0 #fbc02d, 0 0 8px #ffd54f;
-		transform: scale(1.05);
-	}
-
-	.booster-icon {
-		font-size: 1.4rem;
-	}
-
-	.booster-label-container {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-	}
-
-	.booster-name {
-		font-size: 0.75rem;
-		font-weight: 700;
-		color: #5d3f2c;
-	}
-
-	.booster-count {
-		font-size: 0.7rem;
-		font-weight: 600;
-		color: #888;
-	}
-
-	.booster-instruction {
-		font-size: 0.75rem;
-		color: #ef6c00;
-		font-weight: 600;
+		.progress-bar-container {
+			padding-inline: 8px;
+		}
 	}
 </style>

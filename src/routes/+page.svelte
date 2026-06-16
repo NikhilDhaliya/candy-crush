@@ -4,6 +4,7 @@
 	import MapScreen from '$lib/components/MapScreen.svelte';
 	import GameHUD from '$lib/components/GameHUD.svelte';
 	import Board from '$lib/components/Board.svelte';
+	import BoosterPanel from '$lib/components/BoosterPanel.svelte';
 	import Popup from '$lib/components/Popup.svelte';
 	import Candy from '$lib/components/Candy.svelte';
 
@@ -110,6 +111,7 @@
 		<div class="gameplay-screen">
 			<GameHUD />
 			<Board />
+			<BoosterPanel />
 			<Popup />
 		</div>
 	{/if}
@@ -283,15 +285,123 @@
 
 	/* Gameplay Screen */
 	.gameplay-screen {
+		--screen-pad-x: clamp(8px, 2.5vw, 18px);
+		--screen-pad-top: max(8px, env(safe-area-inset-top));
+		--screen-pad-bottom: max(8px, env(safe-area-inset-bottom));
+		--board-size: min(calc(100vw - var(--screen-pad-x) * 2), calc(100dvh - 198px), 512px);
 		width: 100vw;
 		height: 100vh;
-		max-width: 480px;
-		background: radial-gradient(circle, #ffb4d6 0%, #b3e5fc 100%);
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		padding: 16px;
-		box-shadow: 0 0 30px rgba(0,0,0,0.3);
+		height: 100dvh;
+		max-width: 540px;
+		background:
+			radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.62), transparent 18%),
+			radial-gradient(circle at 82% 18%, rgba(255, 226, 92, 0.44), transparent 20%),
+			linear-gradient(180deg, #67cdf3 0%, #ffd4e8 42%, #ff9bc7 100%);
+		display: grid;
+		grid-template-rows: auto minmax(0, 1fr) auto;
+		align-items: center;
+		justify-items: center;
+		gap: clamp(6px, 1.4dvh, 12px);
+		padding:
+			var(--screen-pad-top)
+			var(--screen-pad-x)
+			var(--screen-pad-bottom);
+		box-shadow: 0 0 34px rgba(52, 42, 64, 0.34);
 		overflow: hidden;
+		position: relative;
+		isolation: isolate;
+	}
+
+	.gameplay-screen::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background:
+			linear-gradient(90deg, rgba(255, 255, 255, 0.16), transparent 24% 76%, rgba(255, 255, 255, 0.16)),
+			repeating-linear-gradient(
+				-18deg,
+				rgba(255, 255, 255, 0.13) 0 10px,
+				transparent 10px 34px
+			);
+		pointer-events: none;
+		z-index: -1;
+	}
+
+	@media (max-height: 760px) {
+		.gameplay-screen {
+			--board-size: min(calc(100vw - var(--screen-pad-x) * 2), calc(100dvh - 160px), 500px);
+			gap: 6px;
+		}
+	}
+
+	@media (max-height: 640px) {
+		.gameplay-screen {
+			--board-size: min(calc(100vw - var(--screen-pad-x) * 2), calc(100dvh - 126px), 460px);
+			gap: 4px;
+		}
+	}
+
+	@media (min-width: 800px) {
+		.game-container {
+			background:
+				radial-gradient(circle at 20% 20%, rgba(255, 213, 79, 0.22), transparent 26%),
+				radial-gradient(circle at 80% 12%, rgba(79, 195, 247, 0.24), transparent 28%),
+				linear-gradient(135deg, #304763 0%, #6a4d7e 48%, #c6537c 100%);
+		}
+
+		.gameplay-screen {
+			--board-size: min(512px, calc(100dvh - 216px), 42vw);
+			width: min(540px, 42vw);
+			min-width: 430px;
+			border-left: 1px solid rgba(255, 255, 255, 0.28);
+			border-right: 1px solid rgba(80, 23, 0, 0.2);
+			box-shadow:
+				0 24px 70px rgba(23, 14, 38, 0.5),
+				0 0 0 10px rgba(255, 255, 255, 0.06);
+		}
+	}
+
+	@media (max-width: 420px) {
+		.gameplay-screen {
+			--screen-pad-x: 7px;
+		}
+	}
+
+	/* Responsive scaling rules for small mobile viewports */
+	@media (max-height: 700px) {
+		.logo-title {
+			font-size: 3.6rem;
+		}
+		.logo-subtitle {
+			font-size: 1.3rem;
+			margin-top: 5px;
+		}
+		.play-btn {
+			font-size: 1.5rem;
+			padding: 12px 36px;
+		}
+		.menu-screen {
+			gap: 12px;
+			padding: 16px;
+		}
+		.splash-screen {
+			padding: 12px;
+		}
+	}
+
+	@media (max-height: 560px) {
+		.logo-title {
+			font-size: 2.8rem;
+		}
+		.logo-subtitle {
+			font-size: 1.1rem;
+		}
+		.play-btn {
+			font-size: 1.3rem;
+			padding: 10px 28px;
+		}
+		.menu-screen {
+			gap: 8px;
+		}
 	}
 </style>
