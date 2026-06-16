@@ -216,6 +216,7 @@
 	.map-screen-wrapper {
 		width: 100vw;
 		height: 100vh;
+		height: 100dvh;
 		max-width: 480px;
 		background: radial-gradient(circle, #e8f5e9 0%, #a5d6a7 100%);
 		display: flex;
@@ -227,27 +228,26 @@
 
 	/* Map Top HUD */
 	.map-hud {
-		position: absolute;
-		top: 0;
-		left: 0;
+		position: relative;
 		width: 100%;
-		height: 60px;
+		padding: max(8px, env(safe-area-inset-top)) 12px 8px 12px;
+		background: rgba(255, 255, 255, 0.92);
+		backdrop-filter: blur(10px);
+		border-bottom: 4px solid #81c784;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 0 16px;
-		background: rgba(255, 255, 255, 0.9);
-		border-bottom: 4px solid #81c784;
+		gap: 6px;
 		z-index: 10;
 	}
 
 	.map-home-btn {
-		font-size: 1.5rem;
+		font-size: 1.3rem;
 		background: #fff;
 		border: 2.5px solid #81c784;
 		border-radius: 50%;
-		width: 40px;
-		height: 40px;
+		width: 36px;
+		height: 36px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -263,14 +263,15 @@
 		background: #fff;
 		border: 3px solid #ffca28;
 		border-radius: 20px;
-		padding: 4px 14px;
+		padding: 4px 10px;
 		display: flex;
 		align-items: center;
-		gap: 6px;
+		gap: 4px;
 		box-shadow: 0 4px 0 #f57f17;
 		font-weight: 700;
-		font-size: 1.1rem;
+		font-size: 0.95rem;
 		color: #f57f17;
+		white-space: nowrap;
 	}
 
 	.map-settings-buttons {
@@ -279,12 +280,12 @@
 	}
 
 	.map-settings-btn {
-		font-size: 1.1rem;
+		font-size: 1rem;
 		background: #fff;
 		border: 2.5px solid #81c784;
 		border-radius: 50%;
-		width: 36px;
-		height: 36px;
+		width: 34px;
+		height: 34px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -302,13 +303,33 @@
 		box-shadow: 0 3px 0 #f57f17;
 	}
 
+	@media (max-width: 360px) {
+		.map-hud {
+			padding: max(6px, env(safe-area-inset-top)) 8px 6px 8px;
+			gap: 4px;
+		}
+		.map-home-btn {
+			width: 32px;
+			height: 32px;
+			font-size: 1.1rem;
+		}
+		.coin-badge {
+			padding: 3px 8px;
+			font-size: 0.85rem;
+		}
+		.map-settings-btn {
+			width: 30px;
+			height: 30px;
+			font-size: 0.9rem;
+		}
+	}
+
 	/* Scroll Path Container */
 	.scroll-container {
 		flex-grow: 1;
 		width: 100%;
 		overflow-y: scroll;
 		scroll-behavior: smooth;
-		padding-top: 60px; /* space for top hud */
 	}
 
 	.path-scroller {
