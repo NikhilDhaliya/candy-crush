@@ -13,16 +13,22 @@ html {
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
-	background: #304763;
+	background: #8ddfff;
 	overscroll-behavior: none;
 }
 
 body {
 	font-family: 'Fredoka', sans-serif;
 	background:
-		radial-gradient(circle at 18% 18%, rgba(255, 229, 138, 0.28), transparent 28%),
-		radial-gradient(circle at 82% 12%, rgba(79, 195, 247, 0.28), transparent 30%),
-		linear-gradient(135deg, #304763 0%, #6a4d7e 48%, #c6537c 100%);
+		radial-gradient(ellipse 150px 56px at 12% 16%, rgba(255, 255, 255, 0.72) 0 45%, transparent 46%),
+		radial-gradient(ellipse 118px 44px at 20% 20%, rgba(255, 255, 255, 0.48) 0 45%, transparent 46%),
+		radial-gradient(ellipse 170px 62px at 86% 14%, rgba(255, 255, 255, 0.68) 0 45%, transparent 46%),
+		radial-gradient(ellipse 128px 48px at 78% 19%, rgba(255, 255, 255, 0.44) 0 45%, transparent 46%),
+		radial-gradient(ellipse 42vw 23vh at 5% 108%, #ff86bd 0 60%, transparent 61%),
+		radial-gradient(ellipse 46vw 26vh at 96% 106%, #ffd95b 0 59%, transparent 60%),
+		radial-gradient(ellipse 20vw 15vh at 50% 112%, #fff3cd 0 60%, transparent 61%),
+		repeating-linear-gradient(82deg, transparent 0 34px, rgba(255, 255, 255, 0.16) 34px 42px),
+		linear-gradient(180deg, #78d9ff 0%, #bff2ff 44%, #ffd8eb 100%);
 	background-attachment: fixed;
 	color: #4a2105;
 	overflow: hidden;
