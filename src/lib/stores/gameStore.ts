@@ -346,23 +346,53 @@ const initialLevelsProgress: PlayerProgress[] = Array(LEVELS.length)
 		highscore: 0
 	}));
 
-let savedProgress = null;
+let savedData: { levelsProgress?: PlayerProgress[]; coins?: number } | null = null;
 if (typeof window !== 'undefined') {
 	const data = localStorage.getItem('candy_crush_progress');
 	if (data) {
 		try {
-			savedProgress = JSON.parse(data);
+			savedData = JSON.parse(data);
 		} catch (e) {
 			console.error(e);
 		}
 	}
 }
 
+function normalizeProgress(data: typeof savedData): PlayerProgress[] {
+	if (!data) return initialLevelsProgress;
+
+	// Older builds accidentally stored/loaded incompatible shapes. Keep the user
+	// moving by merging only valid progress entries into a fresh level list.
+	const rawProgress = Array.isArray(data)
+		? data
+		: Array.isArray(data.levelsProgress)
+			? data.levelsProgress
+			: [];
+
+	const normalized = initialLevelsProgress.map((fallback, index) => {
+		const saved = rawProgress[index];
+		if (!saved || typeof saved !== 'object') return fallback;
+
+		return {
+			unlocked: Boolean(saved.unlocked) || index === 0,
+			stars: typeof saved.stars === 'number' ? saved.stars : 0,
+			highscore: typeof saved.highscore === 'number' ? saved.highscore : 0
+		};
+	});
+
+	normalized[0].unlocked = true;
+	return normalized;
+}
+
+function normalizeCoins(data: typeof savedData): number {
+	return typeof data?.coins === 'number' ? data.coins : 120;
+}
+
 const defaultState: GameState = {
 	screen: 'splash',
 	levelIndex: 0,
-	levelsProgress: savedProgress || initialLevelsProgress,
-	coins: savedProgress ? (savedProgress.coins ?? 120) : 120,
+	levelsProgress: normalizeProgress(savedData),
+	coins: normalizeCoins(savedData),
 	score: 0,
 	movesLeft: 0,
 	timeLeft: 0,
