@@ -293,10 +293,10 @@
 		height: 100vh;
 		height: 100dvh;
 		max-width: 540px;
-		background:
-			radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.62), transparent 18%),
-			radial-gradient(circle at 82% 18%, rgba(255, 226, 92, 0.44), transparent 20%),
-			linear-gradient(180deg, #67cdf3 0%, #ffd4e8 42%, #ff9bc7 100%);
+		background-color: #a2e3f4;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23a2e3f4'/%3E%3Cstop offset='70%25' stop-color='%23dcf7fd'/%3E%3Cstop offset='100%25' stop-color='%23fcfdff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23g)'/%3E%3Ccircle cx='12' cy='25' r='14' fill='%23ffffff' opacity='0.35'/%3E%3Ccircle cx='22' cy='28' r='10' fill='%23ffffff' opacity='0.35'/%3E%3Ccircle cx='80' cy='18' r='12' fill='%23ffffff' opacity='0.35'/%3E%3Ccircle cx='88' cy='21' r='9' fill='%23ffffff' opacity='0.35'/%3E%3Cpath d='M-10 105 Q15 88 40 102 T90 92 T110 103 L110 110 L-10 110 Z' fill='%23ffe8d6' opacity='0.4'/%3E%3Cpath d='M-10 105 Q25 95 60 105 T110 98 L110 110 L-10 110 Z' fill='%23ffe0cc' opacity='0.35'/%3E%3C/svg%3E");
+		background-size: cover;
+		background-position: bottom;
 		display: grid;
 		grid-template-rows: auto minmax(0, 1fr) auto;
 		align-items: center;
@@ -313,18 +313,7 @@
 	}
 
 	.gameplay-screen::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background:
-			linear-gradient(90deg, rgba(255, 255, 255, 0.16), transparent 24% 76%, rgba(255, 255, 255, 0.16)),
-			repeating-linear-gradient(
-				-18deg,
-				rgba(255, 255, 255, 0.13) 0 10px,
-				transparent 10px 34px
-			);
-		pointer-events: none;
-		z-index: -1;
+		content: none;
 	}
 
 	@media (max-height: 760px) {
