@@ -228,13 +228,15 @@
 					role="button"
 					tabindex="0"
 				>
-					<Candy
-						color={item.candy.color}
-						type={item.candy.type}
-						colorBlindMode={$gameStore.colorBlindMode}
-						isMatching={$gameStore.matchingKeys.has(item.key)}
-						size="86%"
-					/>
+					<div class="candy-nudge-wrapper">
+						<Candy
+							color={item.candy.color}
+							type={item.candy.type}
+							colorBlindMode={$gameStore.colorBlindMode}
+							isMatching={$gameStore.matchingKeys.has(item.key)}
+							size="86%"
+						/>
+					</div>
 				</div>
 			{/each}
 		</div>
@@ -438,8 +440,20 @@
 	}
 
 	.invalid-swap {
-		animation: invalid-nudge 0.28s cubic-bezier(0.3, 1.5, 0.65, 1) both;
 		z-index: 5;
+	}
+
+	.candy-nudge-wrapper {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		will-change: transform;
+	}
+
+	.invalid-swap .candy-nudge-wrapper {
+		animation: invalid-nudge 0.28s cubic-bezier(0.3, 1.5, 0.65, 1) both;
 	}
 
 	.impact-hit {
